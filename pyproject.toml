@@ -1,0 +1,35 @@
+[project]
+name = "mamnatroot"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "Charbel Mamlankou", email = "charbelzeusmamlankou@gmail.com"},
+    {name = "Eudes Natabou", email = "eudesnatabou@gmail.com"}
+]
+license = { file = "LICENSE" }
+readme = "README.md"
+requires-python = ">=3.11"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "numpy (>=2.3.2,<3.0.0)",
+    "matplotlib (>=3.10.5,<4.0.0)",
+    "cython (>=3.1.2,<4.0.0)",
+    "setuptools (>=80.9.0,<81.0.0)"
+]
+
+[project.urls]
+Homepage = "https://github.com/MCDev30/mamnatroot-pkg"
+Repository = "https://github.com/MCDev30/mamnatroot-pkg"
+
+[tool.poetry]
+packages = [{include = "mamnatroot", from = "src"}]
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0", "setuptools>=69.0.0,<70.0.0", "wheel>=0.42.0,<0.43.0", "cython>=3.1.2,<4.0.0", "numpy>=2.3.2,<3.0.0", "matplotlib>=3.10.5,<4.0.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
