@@ -5,16 +5,9 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "src"
 from mamnatroot import MamNatRootSolver
 
 def f(x):
-    return x**x - 49#(x + 3) * (x - 1)
+    return (x + 3)*(x - 1)**2
 
 
-roots, time = MamNatRootSolver.find_all_roots(
-    f,
-    interval=[0, 4],
-    getRuntime=True,
-    # depth=20,  
-    # verbose=True,
-    visualize=True
-)
+roots, time = MamNatRootSolver.find_all_roots(f, interval=[-4, 2], getRuntime=True, verbose=True, visualize=True, depth=10)
 
-print(f"\nRésultat final: Racines trouvées = {np.round(roots, 10)}", time)
+print(f"\nRésultat final: Racines trouvées = {np.round(roots, 5)}")
