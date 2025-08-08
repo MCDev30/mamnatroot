@@ -21,7 +21,6 @@ run:
 		echo "Erreur : Nom de fichier manquant. Utilisation : make run file=<nom_du_fichier_sans_extension>"; \
 		exit 1; \
 	fi
-	@echo "--- Exécution de $(file).py ---"
 	@$(PYTHON) $(file).py
 
 .PHONY: dist
@@ -30,11 +29,10 @@ dist: build
 	@$(PYTHON) -m build
 	@echo "Packages créés dans le dossier 'dist/'."
 
-# Cible pour déployer sur TestPyPI
 # Dépend de 'dist' pour s'assurer que les packages sont construits avant.
 .PHONY: deploy-test
 deploy-test: dist
-	@echo "--- Déploiement sur TestPyPI ---"
+	@echo "--- Déploiement sur PyPI ---"
 	@$(PYTHON) -m twine upload --repository testpypi dist/*
 
 # Cible pour déployer sur le vrai PyPI

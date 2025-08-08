@@ -71,7 +71,8 @@ class MamNatRootSolver:
         depth: int = 10,
         verbose: bool = False,
         visualize: bool = False,
-        getRuntime: bool = False
+        getRuntime: bool = False,
+        h: float = 1e-8
     ) -> Union[List[float], Tuple[List[float], float]]:
         
         start_time = time.perf_counter()
@@ -79,14 +80,12 @@ class MamNatRootSolver:
         if len(interval) != 2 or interval[0] >= interval[1]:
             raise ValueError("Interval must be a list or tuple [a, b] with a < b.")
         
-        cdef double a, b, tol, validation_tol, h
+        cdef double a, b, tol, validation_tol
         a, b = interval
         tol = 1e-12
         validation_tol = 1e-8
-        h = 1e-8 # Pas pour la différence finie
 
-        # Fonction interne pour approximer la dérivée numériquement
-        def f_prime_approx(x):
+        def tangent_slope(x):
             x = np.asarray(x)
             return (func(x + h) - func(x - h)) / (2 * h)
 
@@ -113,12 +112,12 @@ class MamNatRootSolver:
 
         # Etape 2: Recherche des racines tangentes
         # if verbose: print("\n1b. Searching for tangent root candidates on f'(x)...")
-        tangent_intervals = _c_isolate_crossing_recursive(f_prime_approx, a, b, 0, depth)
+        tangent_intervals = _c_isolate_crossing_recursive(tangent_slope, a, b, 0, depth)
         # if verbose: print(f"  -> Found {len(tangent_intervals)} potential tangent location(s).")
         
         tangent_candidates = []
         for iv in tangent_intervals:
-            root = _approximate_root_in_interval(f_prime_approx, iv)
+            root = _approximate_root_in_interval(tangent_slope, iv)
             tangent_candidates.append(root)
 
         # Etape 3: Filtrage, combinaison et dé-duplication
@@ -154,7 +153,8 @@ class MamNatRootSolver:
                 plt.axhline(0, color='gray', linestyle='--')
                 
                 if found_roots:
-                    plt.plot(found_roots, func(np.array(found_roots)), 'rX', markersize=5, label='Roots', linestyle='None')
+                    label = 'Root' if len(found_roots) == 1 else 'Roots'
+                    plt.plot(found_roots, func(np.array(found_roots)), 'rX', markersize=5, label=label, linestyle='None')
                     for root in found_roots:
                         plt.axvline(x=root, color='black', linestyle=':', alpha=0.6)
                         plt.text(root+0.15, 0.1 * np.max(y_vals), f"x={root:.5f}", rotation=90, va='bottom', ha='center', bbox=dict(boxstyle="round,pad=0.3", fc="white", ec="none", alpha=0.7))
