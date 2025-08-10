@@ -19,7 +19,7 @@ This project was born from an original idea by Mamlankou and Natabou, combining 
 
 `mamnatroot` only requires `numpy` for its core functionality. `matplotlib` is an optional dependency needed for visualization.
 
-**Prerequisites:** Python 3.8 or higher.
+**Prerequisites:** Python 3.11 or higher.
 
 You can install the package using `pip`.
 
