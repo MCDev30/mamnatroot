@@ -23,14 +23,11 @@ This project was born from an original idea by Mamlankou and Natabou, combining 
 
 You can install the package using `pip`.
 
-#### Basic Installation (without visualization)
-
 Open a terminal or command prompt and run:
-```bash
-pip install mamnatroot
-```
-*(This command will work once the package is published to PyPI. For now, you are using it locally with Poetry.)*
 
+```bash
+pip install git+https://github.com/MCDev30/mamnatroot.git
+```
 
 ---
 
@@ -128,7 +125,7 @@ MamNatRootSolver.find_all_roots(func, interval, depth=14, verbose=False, visuali
 |--------------|----------------------------------------|---------------------------------------------------------------------------------------------------------|-----------|
 | `func`       | `Callable[[float], float]`             | The single-argument function whose roots are to be found.                                               | Required  |
 | `interval`   | `List[float]` or `Tuple[float, float]` | The search interval `[a, b]`.                                                                           | Required  |
-| `depth`      | `int`                                  | The depth of the recursive subdivision. Increase for better precision on tangent roots.                 | `14`      |
+| `depth`      | `int`                                  | The depth of the recursive subdivision. Increase for better precision on tangent roots.                 | Based on interval      |
 | `verbose`    | `bool`                                 | If `True`, prints the details of the search process.                                                    | `False`   |
 | `visualize`  | `bool`                                 | If `True`, displays a plot of the results (requires `matplotlib`).                                      | `False`   |
 | `getRuntime` | `bool`                                 | If `True`, the function returns a `(roots, exec_time)` tuple. Otherwise, it returns only the list of roots. | `False`   |
@@ -149,6 +146,8 @@ Contributions are welcome! If you have ideas for improvements or find a bug, fee
 
 *   **Charbel Mamlankou** 
 *   **Jean-Eudes Natabou**
+*   **Brice Adjalla**
+
 ## 📜 License
 
 This project is licensed under the MIT License. See the `LICENSE` file for more details.
